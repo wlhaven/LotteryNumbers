@@ -23,7 +23,6 @@ class Lottery {
     private Scanner scanner;
     private final char myCopyRight;
 
-
     Lottery() {
         SIZE = 6;
         MEGABUCKS = 48;
@@ -48,9 +47,8 @@ class Lottery {
             for (var index = 1; index <= num_boards; index++) {
                 System.out.println(format("\nBoard: %d", index));
                 outFile.write(String.format("\n" + "Board: %d \n", index));
-
                 for (var i = 0; i < SIZE; i++) {
-                    int number = rand.nextInt(MEGABUCKS) + 1;
+                    var number = rand.nextInt(MEGABUCKS) + 1;
                     lotto_ticket[i] = number;
                     var tmp_num = lotto_ticket[i];
                     var flag = searchTicket(lotto_ticket, tmp_num, i);
@@ -73,7 +71,6 @@ class Lottery {
                     }
                 }
             }
-
             System.out.println("\nDo you wish to exit?");
             answer = getUserString();
         }
