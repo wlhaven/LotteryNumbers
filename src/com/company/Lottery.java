@@ -5,9 +5,7 @@ package com.company;
 
 import java.io.*;
 import java.util.InputMismatchException;
-import java.util.Random;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 import static java.lang.String.format;
 
