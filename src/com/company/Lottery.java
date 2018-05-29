@@ -3,19 +3,15 @@ package com.company;
   Created by Wally Haven on 5/16/2018.
  */
 
-import java.io.*;
-import java.util.InputMismatchException;
-import java.util.Random;
-import java.util.Arrays;
-import java.util.Scanner;
-
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
 import static java.lang.String.format;
-
 
 class Lottery {
     private final int SIZE;
     private final int MEGABUCKS;
-    private final int[] lotto_ticket;
+    private final ArrayList<Integer> lottoTicket;
     private int num_boards;
     private String answer;
     private final String outFileName;
@@ -26,12 +22,12 @@ class Lottery {
     Lottery() {
         SIZE = 6;
         MEGABUCKS = 48;
+        lottoTicket = new ArrayList<>(SIZE);
         num_boards = 0;
         answer = "n";
         outFileName = "LotteryNumbers.txt";
         outFile = null;
         scanner = new Scanner(System.in);
-        lotto_ticket = new int[SIZE];
         myCopyRight = '\u00A9';  //unicode copyright symbol
     }
 
@@ -48,21 +44,20 @@ class Lottery {
                 System.out.println(format("\nBoard: %d", index));
                 outFile.write(String.format("\n" + "Board: %d \n", index));
                 for (var i = 0; i < SIZE; i++) {
-                    var number = rand.nextInt(MEGABUCKS) + 1;
-                    lotto_ticket[i] = number;
-                    var tmp_num = lotto_ticket[i];
-                    var flag = searchTicket(lotto_ticket, tmp_num, i);
+                    lottoTicket.add(rand.nextInt(MEGABUCKS) + 1);
+                    var tmp_num = lottoTicket.get(i);
+                    var flag = searchTicket(lottoTicket, tmp_num);
                     while (flag) {
-                        tmp_num = lotto_ticket[i];
-                        flag = searchTicket(lotto_ticket, tmp_num, i);
-                        if (flag) {
-                            lotto_ticket[i] = rand.nextInt(MEGABUCKS) + 1;
+                        tmp_num = rand.nextInt(MEGABUCKS) + 1;
+                        flag = searchTicket(lottoTicket, tmp_num);
+                        if (!flag) {
+                            lottoTicket.set( i, tmp_num);
                         }
                     }
                 }
-                Arrays.sort(lotto_ticket);
+                Collections.sort(lottoTicket);
 
-                for (var ticket : lotto_ticket) {
+                for (var ticket : lottoTicket) {
                     try {
                         System.out.println(ticket + " ");
                         outFile.write(String.valueOf(ticket) + " ");
@@ -70,6 +65,7 @@ class Lottery {
                         e.printStackTrace();
                     }
                 }
+                lottoTicket.clear();
             }
             System.out.println("\nDo you wish to exit?");
             answer = getUserString();
@@ -104,14 +100,7 @@ class Lottery {
         return inputLine.toUpperCase();
     }
 
-    private boolean searchTicket(int lotto_ticket[], int num, int size) {
-        var count = 0;
-        while (count < size) {
-            if (num == lotto_ticket[count]) {
-                return (true);
-            }
-            count++;
-        }
-        return (false);
+    private boolean searchTicket(ArrayList<Integer> lottoTicket, int num) {
+        return lottoTicket.contains(num);
     }
 }
