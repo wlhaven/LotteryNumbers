@@ -37,40 +37,47 @@ class Lottery {
             System.out.println("\t\t\t" + myCopyRight + java.time.Year.now() + " by Wally Haven");
             System.out.println("\nHow many sets of numbers do you wish to play?");
             num_boards = getUserNumber();
-            Random rand = new Random();
-            createFile();
+            if (num_boards > 0) {
+                Random rand = new Random();
+                createFile();
 
-            for (var index = 1; index <= num_boards; index++) {
-                System.out.println(format("\nBoard: %d", index));
-                outFile.write(String.format("\n" + "Board: %d \n", index));
-                for (var i = 0; i < SIZE; i++) {
-                    lottoTicket.add(rand.nextInt(MEGABUCKS) + 1);
-                    var tmp_num = lottoTicket.get(i);
-                    var flag = searchTicket(lottoTicket, tmp_num);
-                    while (flag) {
-                        tmp_num = rand.nextInt(MEGABUCKS) + 1;
-                        flag = searchTicket(lottoTicket, tmp_num);
-                        if (!flag) {
-                            lottoTicket.set( i, tmp_num);
+                for (var index = 1; index <= num_boards; index++) {
+                    System.out.println(format("\nBoard: %d", index));
+                    outFile.write(String.format("\n" + "Board: %d \n", index));
+                    for (var i = 0; i < SIZE; i++) {
+                        lottoTicket.add(rand.nextInt(MEGABUCKS) + 1);
+                        var tmp_num = lottoTicket.get(i);
+                        var flag = searchTicket(lottoTicket, tmp_num);
+                        while (flag) {
+                            tmp_num = rand.nextInt(MEGABUCKS) + 1;
+                            flag = searchTicket(lottoTicket, tmp_num);
+                            if (!flag) {
+                                lottoTicket.set(i, tmp_num);
+                            }
                         }
                     }
-                }
-                Collections.sort(lottoTicket);
+                    Collections.sort(lottoTicket);
 
-                for (var ticket : lottoTicket) {
-                    try {
-                        System.out.println(ticket + " ");
-                        outFile.write(String.valueOf(ticket) + " ");
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    for (var ticket : lottoTicket) {
+                        try {
+                            System.out.println(ticket + " ");
+                            outFile.write(String.valueOf(ticket) + " ");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
+                    lottoTicket.clear();
                 }
-                lottoTicket.clear();
+                System.out.println("\nDo you wish to exit?");
+                answer = getUserString();
             }
-            System.out.println("\nDo you wish to exit?");
-            answer = getUserString();
+            else {
+                System.out.println("\nGoodbye");
+                return;
+            }
+            System.out.println("\nGoodbye and good luck!");
+            outFile.close();
         }
-        outFile.close();
     }
 
     private void createFile() {
