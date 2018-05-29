@@ -1,4 +1,4 @@
-package com.company;
+package com.gator;
 /*
   Created by Wally Haven on 5/16/2018.
  */
@@ -39,40 +39,47 @@ class Lottery {
             System.out.println("\t\t\t" + myCopyRight + java.time.Year.now() + " by Wally Haven");
             System.out.println("\nHow many sets of numbers do you wish to play?");
             num_boards = getUserNumber();
-            Random rand = new Random();
-            createFile();
+            if (num_boards > 0) {
+                Random rand = new Random();
+                createFile();
 
-            for (var index = 1; index <= num_boards; index++) {
-                System.out.println(format("\nBoard: %d", index));
-                outFile.write(String.format("\n" + "Board: %d \n", index));
-                for (var i = 0; i < SIZE; i++) {
-                    var number = rand.nextInt(MEGABUCKS) + 1;
-                    lotto_ticket[i] = number;
-                    var tmp_num = lotto_ticket[i];
-                    var flag = searchTicket(lotto_ticket, tmp_num, i);
-                    while (flag) {
-                        tmp_num = rand.nextInt(MEGABUCKS) + 1;
-                        flag = searchTicket(lotto_ticket, tmp_num, i);
-                        if (!flag) {
-                            lotto_ticket[i] = tmp_num;
+                for (var index = 1; index <= num_boards; index++) {
+                    System.out.println(format("\nBoard: %d", index));
+                    outFile.write(String.format("\n" + "Board: %d \n", index));
+                    for (var i = 0; i < SIZE; i++) {
+                        var number = rand.nextInt(MEGABUCKS) + 1;
+                        lotto_ticket[i] = number;
+                        var tmp_num = lotto_ticket[i];
+                        var flag = searchTicket(lotto_ticket, tmp_num, i);
+                        while (flag) {
+                            tmp_num = rand.nextInt(MEGABUCKS) + 1;
+                            flag = searchTicket(lotto_ticket, tmp_num, i);
+                            if (!flag) {
+                                lotto_ticket[i] = tmp_num;
+                            }
+                        }
+                    }
+                    Arrays.sort(lotto_ticket);
+
+                    for (var ticket : lotto_ticket) {
+                        try {
+                            System.out.println(ticket + " ");
+                            outFile.write(String.valueOf(ticket) + " ");
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
                 }
-                Arrays.sort(lotto_ticket);
-
-                for (var ticket : lotto_ticket) {
-                    try {
-                        System.out.println(ticket + " ");
-                        outFile.write(String.valueOf(ticket) + " ");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+                System.out.println("\nDo you wish to exit?");
+                answer = getUserString();
             }
-            System.out.println("\nDo you wish to exit?");
-            answer = getUserString();
+            else {
+                System.out.println("\nGoodbye");
+                return;
+            }
+            System.out.println("\nGoodbye and good luck!");
+            outFile.close();
         }
-        outFile.close();
     }
 
     private void createFile() {
