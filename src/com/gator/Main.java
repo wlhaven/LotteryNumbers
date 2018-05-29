@@ -1,4 +1,4 @@
-package com.company;
+package com.gator;
 
 import java.io.IOException;
 
