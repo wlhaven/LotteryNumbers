@@ -53,10 +53,10 @@ class Lottery {
                     var tmp_num = lotto_ticket[i];
                     var flag = searchTicket(lotto_ticket, tmp_num, i);
                     while (flag) {
-                        tmp_num = lotto_ticket[i];
+                        tmp_num = rand.nextInt(MEGABUCKS) + 1;
                         flag = searchTicket(lotto_ticket, tmp_num, i);
-                        if (flag) {
-                            lotto_ticket[i] = rand.nextInt(MEGABUCKS) + 1;
+                        if (!flag) {
+                            lotto_ticket[i] = tmp_num;
                         }
                     }
                 }
