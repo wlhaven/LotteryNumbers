@@ -1,4 +1,4 @@
-package com.company;
+package com.gator;
 /*
   Created by Wally Haven on 5/16/2018.
  */
