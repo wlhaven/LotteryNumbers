@@ -11,7 +11,7 @@ import static java.lang.String.format;
 class Lottery {
     private final int SIZE;
     private final int MEGABUCKS;
-    private final ArrayList<Integer> lottoTicket;
+    private final List<Integer> lottoTicket;
     private int num_boards;
     private String answer;
     private final String outFileName;
@@ -107,7 +107,7 @@ class Lottery {
         return inputLine.toUpperCase();
     }
 
-    private boolean searchTicket(ArrayList<Integer> lottoTicket, int num) {
+    private boolean searchTicket(List<Integer> lottoTicket, int num) {
         return lottoTicket.contains(num);
     }
 }
