@@ -4,7 +4,6 @@ package com.gator;
  */
 
 import java.io.*;
-import java.util.InputMismatchException;
 import java.util.*;
 
 import static java.lang.String.format;
@@ -50,10 +49,10 @@ class Lottery {
                         var number = rand.nextInt(MEGABUCKS) + 1;
                         lotto_ticket[i] = number;
                         var tmp_num = lotto_ticket[i];
-                        var flag = searchTicket(lotto_ticket, tmp_num, i);
+                        var flag = searchTicket(lotto_ticket, tmp_num);
                         while (flag) {
                             tmp_num = rand.nextInt(MEGABUCKS) + 1;
-                            flag = searchTicket(lotto_ticket, tmp_num, i);
+                            flag = searchTicket(lotto_ticket, tmp_num);
                             if (!flag) {
                                 lotto_ticket[i] = tmp_num;
                             }
@@ -72,8 +71,7 @@ class Lottery {
                 }
                 System.out.println("\nDo you wish to exit?");
                 answer = getUserString();
-            }
-            else {
+            } else {
                 System.out.println("\nGoodbye");
                 return;
             }
@@ -109,14 +107,13 @@ class Lottery {
         return inputLine.toUpperCase();
     }
 
-    private boolean searchTicket(int lotto_ticket[], int num, int size) {
-        var count = 0;
-        while (count < size) {
-            if (num == lotto_ticket[count]) {
-                return (true);
+    private boolean searchTicket(int lotto_ticket[], int num) {
+        boolean flag = false;
+        for (int number : lotto_ticket) {
+            if (number == num) {
+                flag = true;
             }
-            count++;
         }
-        return (false);
+        return flag;
     }
 }
