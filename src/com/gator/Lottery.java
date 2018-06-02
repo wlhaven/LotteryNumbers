@@ -12,8 +12,8 @@ import static java.lang.String.format;
 class Lottery {
     private final int SIZE;
     private final int MEGABUCKS;
-    private final int[] lotto_ticket;
-    private int num_boards;
+    private final int[] lottoTicket;
+    private int numBoards;
     private String answer;
     private final String outFileName;
     private FileWriter outFile;
@@ -23,12 +23,12 @@ class Lottery {
     Lottery() {
         SIZE = 6;
         MEGABUCKS = 48;
-        num_boards = 0;
+        numBoards = 0;
         answer = "n";
         outFileName = "LotteryNumbers.txt";
         outFile = null;
         scanner = new Scanner(System.in);
-        lotto_ticket = new int[SIZE];
+        lottoTicket = new int[SIZE];
         myCopyRight = '\u00A9';  //unicode copyright symbol
     }
 
@@ -37,30 +37,30 @@ class Lottery {
             System.out.println("\n\t\t JAVA LOTTERY NUMBER GENERATOR");
             System.out.println("\t\t\t" + myCopyRight + java.time.Year.now() + " by Wally Haven");
             System.out.println("\nHow many sets of numbers do you wish to play?");
-            num_boards = getUserNumber();
-            if (num_boards > 0) {
+            numBoards = getUserNumber();
+            if (numBoards > 0) {
                 Random rand = new Random();
                 createFile();
 
-                for (var index = 1; index <= num_boards; index++) {
+                for (var index = 1; index <= numBoards; index++) {
                     System.out.println(format("\nBoard: %d", index));
                     outFile.write(String.format("\n" + "Board: %d \n", index));
                     for (var i = 0; i < SIZE; i++) {
                         var number = rand.nextInt(MEGABUCKS) + 1;
-                        lotto_ticket[i] = number;
-                        var tmp_num = lotto_ticket[i];
-                        var flag = searchTicket(lotto_ticket, tmp_num);
+                        lottoTicket[i] = number;
+                        var tmp_num = lottoTicket[i];
+                        var flag = searchTicket(lottoTicket, tmp_num);
                         while (flag) {
                             tmp_num = rand.nextInt(MEGABUCKS) + 1;
-                            flag = searchTicket(lotto_ticket, tmp_num);
+                            flag = searchTicket(lottoTicket, tmp_num);
                             if (!flag) {
-                                lotto_ticket[i] = tmp_num;
+                                lottoTicket[i] = tmp_num;
                             }
                         }
                     }
-                    Arrays.sort(lotto_ticket);
+                    Arrays.sort(lottoTicket);
 
-                    for (var ticket : lotto_ticket) {
+                    for (var ticket : lottoTicket) {
                         try {
                             System.out.println(ticket + " ");
                             outFile.write(String.valueOf(ticket) + " ");
