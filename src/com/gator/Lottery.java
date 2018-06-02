@@ -12,7 +12,7 @@ class Lottery {
     private final int SIZE;
     private final int MEGABUCKS;
     private final List<Integer> lottoTicket;
-    private int num_boards;
+    private int numBoards;
     private String answer;
     private final String outFileName;
     private FileWriter outFile;
@@ -23,7 +23,7 @@ class Lottery {
         SIZE = 6;
         MEGABUCKS = 48;
         lottoTicket = new ArrayList<>(SIZE);
-        num_boards = 0;
+        numBoards = 0;
         answer = "n";
         outFileName = "LotteryNumbers.txt";
         outFile = null;
@@ -36,12 +36,12 @@ class Lottery {
             System.out.println("\n\t\t JAVA LOTTERY NUMBER GENERATOR");
             System.out.println("\t\t\t" + myCopyRight + java.time.Year.now() + " by Wally Haven");
             System.out.println("\nHow many sets of numbers do you wish to play?");
-            num_boards = getUserNumber();
-            if (num_boards > 0) {
+            numBoards = getUserNumber();
+            if (numBoards > 0) {
                 Random rand = new Random();
                 createFile();
 
-                for (var index = 1; index <= num_boards; index++) {
+                for (var index = 1; index <= numBoards; index++) {
                     System.out.println(format("\nBoard: %d", index));
                     outFile.write(String.format("\n" + "Board: %d \n", index));
                     for (var i = 0; i < SIZE; i++) {
