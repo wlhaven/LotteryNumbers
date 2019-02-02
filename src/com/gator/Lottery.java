@@ -61,7 +61,8 @@ class Lottery {
                     for (var ticket : lottoTicket) {
                         try {
                             System.out.println(ticket + " ");
-                            outFile.write(String.valueOf(ticket) + " ");
+                            outFile.write(ticket + " ");
+                            outFile.write("\n");
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
